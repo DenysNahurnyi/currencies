@@ -2,6 +2,7 @@
 const mongoose = require(`mongoose`)
 const config = require(`config`)
 const database = config.get(`database`)
+console.log(`Database: ${database}`)
 
 mongoose.Promise = global.Promise
 
