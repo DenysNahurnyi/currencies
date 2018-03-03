@@ -3,7 +3,7 @@
 const request = require(`request-promise`)
 const config = require(`config`)
 
-const appId = config.get(`currencyService.appId`)
+const appId = require(`../../config/credentials`)[process.env.NODE_ENV].currencyService.appId
 
 module.exports.getCurrencyDescriptionsOuterService = async () => 
 	JSON.parse(

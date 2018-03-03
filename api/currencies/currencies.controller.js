@@ -2,6 +2,7 @@
 
 const currencyUtils = require(`./currencies.util`)
 const currencyDao = require(`./currencies.dao`)
+const errorHelper = require(`../../utils/errorHelper`)
 
 
 module.exports.getCurrenciesRoute = async (req, res, next) => {
@@ -25,12 +26,14 @@ module.exports.getCurrenciesRoute = async (req, res, next) => {
 		// })
 	} catch(err) {
 		console.log(err)
+		errorHelper.notFound(err)
 		return next(err)
 	}
 }
 
 module.exports.test = async (req, res, next) => {
 	try {
+		console.log('1')
 		res.json({
 			msg: "Hello"
 		})
@@ -39,7 +42,7 @@ module.exports.test = async (req, res, next) => {
 		// 	date: new Date()
 		// })
 	} catch(err) {
-		console.log(err)
+		errorHelper.notFound(err)
 		return next(err)
 	}
 }
