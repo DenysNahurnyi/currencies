@@ -7,7 +7,7 @@ const app = express()
 require(`./config/express`)(app)
 
 // Routing
-app.use(`/`, require(`./api/users`))
+app.use(`/api`, require(`./api/currencies`))
 
 // db connection and settings
 const connection = require(`./config/connection`)
@@ -15,6 +15,7 @@ connection.getMongoose()
 
 // error-handler settings
 require(`./config/errorHandler`)(app)
+// prepareDb()
 
 // create server
 app.set(`port`, process.env.PORT || 3000)
