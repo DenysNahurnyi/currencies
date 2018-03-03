@@ -1,11 +1,12 @@
 'use strict'
 const mongoose = require(`mongoose`)
-const _config = require(`./../config/_config`)
+const config = require(`config`)
+const database = config.get(`database`)
 
 mongoose.Promise = global.Promise
 
 module.exports.connect = cb => 
-	mongoose.connect(_config.database, cb)
+	mongoose.connect(database, cb)
 
 module.exports.disconnect = () => 
 	mongoose.disconnect()

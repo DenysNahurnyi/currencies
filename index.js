@@ -4,17 +4,18 @@ const express = require(`express`)
 const http = require(`http`)
 const app = express()
 
-require(`./config/express`)(app)
+require(`./config/notCredentials/express`)(app)
 
 // Routing
 app.use(`/api`, require(`./api/currencies`))
 
 // db connection and settings
-const connection = require(`./config/connection`)
+const connection = require(`./config/notCredentials/connection`)
 connection.getMongoose()
 
 // error-handler settings
-require(`./config/errorHandler`)(app)
+require(`./config/notCredentials/errorHandler`)(app)
+// TODO
 // prepareDb()
 
 // create server
