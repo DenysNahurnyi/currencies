@@ -29,6 +29,21 @@ module.exports.getCurrenciesRoute = async (req, res, next) => {
 	}
 }
 
+module.exports.test = async (req, res, next) => {
+	try {
+		res.json({
+			msg: "Hello"
+		})
+		// logModel.create({
+		// 	event: `Try to save smth in database`,
+		// 	date: new Date()
+		// })
+	} catch(err) {
+		console.log(err)
+		return next(err)
+	}
+}
+
 module.exports.recreateCurrencyDescriptionsInDb = async isEmpty => {
 	try {
 		if(!isEmpty) {

@@ -10,4 +10,8 @@ router.get(`/`,
 	// Token validation
 	controller.getCurrenciesRoute)
 
+router.get(`/test`, 
+	// Token validation
+	controller.test)
+
 module.exports = router
