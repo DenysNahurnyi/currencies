@@ -19,14 +19,17 @@ connection.getMongoose()
 require(`./config/notCredentials/errorHandler`)(app)
 // TODO
 // prepareDb()
-serverInit.prepareServer({values: true, description: true})
+
 
 // create server
 app.set(`port`, process.env.PORT || 3000)
 const server = http.createServer(app)
-server.listen(app.get(`port`), () => {
-	console.log(app.get(`env`))
-	console.log(`listening at:`, app.get(`port`))
+serverInit.prepareServer({values: true, description: true}).then(() => {
+	server.listen(app.get(`port`), () => {
+		console.log(app.get(`env`))
+		console.log(`listening at:`, app.get(`port`))
+	})
 })
+
 
 module.exports = app

@@ -42,7 +42,6 @@ module.exports.recreateCurrenciesValuesInDb = async isEmpty => {
 	}
 	const currencies = await currencyUtils.getCurrencyValuesOuterService()
 	const currenciesArray = currencyUtils.prepareToSaveCurrencyValues(currencies.rates, currencies.base)
-	console.log(`Value: ${currenciesArray[0].base}`)
 	await currencyDao.createCurrencyValue(currenciesArray)
 }
 
