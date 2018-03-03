@@ -10,7 +10,7 @@ require(`./config/notCredentials/express`)(app)
 
 // Routing
 app.use(`/api`, require(`./api/currencies`))
-
+console.log('Environment is: ', app.get(`env`))
 // db connection and settings
 const connection = require(`./config/notCredentials/connection`)
 connection.getMongoose()
