@@ -4,6 +4,8 @@ const express = require(`express`)
 const http = require(`http`)
 const app = express()
 
+const serverInit = require(`./utils/serverInit`)
+
 require(`./config/notCredentials/express`)(app)
 
 // Routing
@@ -17,6 +19,7 @@ connection.getMongoose()
 require(`./config/notCredentials/errorHandler`)(app)
 // TODO
 // prepareDb()
+serverInit.prepareServer({values: true, description: true})
 
 // create server
 app.set(`port`, process.env.PORT || 3000)

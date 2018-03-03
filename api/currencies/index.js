@@ -8,6 +8,6 @@ const controller = require(`./currencies.controller`)
 
 router.get(`/`, 
 	// Token validation
-	controller.getCurrencies)
+	controller.getCurrenciesRoute)
 
 module.exports = router

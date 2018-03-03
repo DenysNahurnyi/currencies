@@ -6,7 +6,7 @@ const Schema = mongoose.Schema
 
 const currencyDescription = new Schema({
 	abbr: String,
-	description: Number
+	description: String
 }, {
 	collection: `currency_description`,
 	_id: true
