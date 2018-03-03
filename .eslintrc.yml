@@ -13,7 +13,7 @@ rules:
     - unix
   quotes:
     - error
-    - single
+    - backtick
   semi:
     - error
     - never

@@ -7,7 +7,7 @@ const Schema = mongoose.Schema
 const log = new Schema({
 	event: String,
 	date: { type: Date, default: Date.now },
-	isError: Boolean
+	isError: {type: Boolean, default: false}
 }, {
 	collection: 'logs',
 	_id: true
