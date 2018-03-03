@@ -7,7 +7,7 @@ const app = express()
 require('./config/express')(app)
 
 // Routing
-app.use('/', require('./routes/api'))
+app.use('/', require('./api/users'))
 
 // db connection and settings
 const connection = require('./config/connection')
