@@ -54,15 +54,24 @@ module.exports.prettifyCurrencyValues = currencyValues => {
 
 module.exports.prettifyCurrencyDetails = (currencyValue, currencyDescription) => {
 	if (!currencyValue || !currencyValue.length) {
-		return errorHelper.serverError(`Currency value not found in database`)
+		throw errorHelper.badRequest(`Currency value not found in database`)
 	}
 	if (!currencyDescription || !currencyDescription.length) {
-		return errorHelper.serverError(`Currency description not found in database`)
+		throw errorHelper.badRequest(`Currency description not found in database`)
 	}
 	return {
 		abbr: currencyValue[0].abbr,
 		value: currencyValue[0].value,
 		description: currencyDescription[0].description,
 		base: currencyValue[0].base
+	}
+}
+
+module.exports.validateAbbr = abbr => {
+	if(!abbr) {
+		throw errorHelper.badRequest(`Abbreviation is not defined`)
+	}
+	if(abbr != abbr.toUpperCase()) {
+		throw errorHelper.badRequest(`Abbreviation should be uppercase`)
 	}
 }

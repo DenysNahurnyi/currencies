@@ -27,14 +27,36 @@ module.exports.getCurrencyValuesRoute = async (req, res, next) => {
 
 module.exports.getCurrencyDetailsRoute = async (req, res, next) => {
 	try {
+		currencyUtils.validateAbbr(req.params.abbr)
 		const requestData = {
 			abbr: req.params.abbr
 		}
-
 		const currencyValueResponse = await currencyDao.getCurrencyValue({abbr: requestData.abbr})
 		const currencyDescriptionResponse = await currencyDao.getCurrencyDescription({abbr: requestData.abbr})
 		const responseData = currencyUtils.prettifyCurrencyDetails(currencyValueResponse, currencyDescriptionResponse)
 		res.json(responseData)
+
+	} catch(err) {
+		return next(err)
+	}
+}
+
+module.exports.updateCurrencyData = async (req, res, next) => {
+	try {
+		module.exports.recreateCurrencyDescriptionsInDb(false)
+		const currencyValuesResponse = await currencyUtils.getCurrencyValuesOuterService()
+
+		await Object.keys(currencyValuesResponse.rates).map(async abbr => {
+			const filter = {abbr}
+			const data = {
+				base: currencyValuesResponse.base,
+				value: currencyValuesResponse.rates[abbr],
+				abbr
+			}
+			await currencyDao.updateCurrencyValue(filter, data)
+		})
+		
+		res.status(200).end(`Database updated`)
 
 	} catch(err) {
 		return next(err)
@@ -70,8 +92,7 @@ module.exports.recreateCurrencyDescriptionsInDb = async isEmpty => {
 	}
 }
 
-// TODO: updateCurrenciesValuesInDb
-module.exports.recreateCurrenciesValuesInDb = async isEmpty => {
+module.exports.recreateCurrencyValuesInDb = async isEmpty => {
 	try {
 		if(!isEmpty) {
 			await currencyDao.dropCurrencyValues()

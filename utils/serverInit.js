@@ -7,7 +7,7 @@ module.exports.prepareServer = async dropOption => {
 	try {
 		const data = await checkIfCollectionsSet()
 		if(dropOption.values || !data.isValuesSet) {
-			await currenciesController.recreateCurrenciesValuesInDb(false)
+			await currenciesController.recreateCurrencyValuesInDb(false)
 		}
 		if(dropOption.description || !data.isDescriptionSet) {
 			await currenciesController.recreateCurrencyDescriptionsInDb(false)

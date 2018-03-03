@@ -18,6 +18,10 @@ router.get(`/rates/:abbr`,
 	// Token validation
 	controller.getCurrencyDetailsRoute)
 
+router.put(`/update`, 
+	// Token validation
+	controller.updateCurrencyData)
+
 router.get(`/test`, 
 	// Token validation
 	controller.testRoute)
