@@ -1,5 +1,5 @@
 'use strict'
-const env = process.env.NODE_ENV || 'local'
+const env = process.env.NODE_ENV || `local`
 const config = {
 	test: {
 		database: `mongodb://localhost:27017/currencies_db`,

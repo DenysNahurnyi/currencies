@@ -1,11 +1,11 @@
 'use strict'
 
-const errorHelper = require('./../utils/errorHelper')
+const errorHelper = require(`./../utils/errorHelper`)
 
 module.exports = (app) => {
 	// catch 404 and forward to error handler
 	app.use((req, res, next) => {
-		const err = errorHelper.notFound('Not Found')
+		const err = errorHelper.notFound(`Not Found`)
 		return next(err)
 	})
 

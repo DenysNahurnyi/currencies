@@ -1,6 +1,6 @@
 'use strict'
-const mongoose = require('mongoose')
-const _config = require('./../config/_config')
+const mongoose = require(`mongoose`)
+const _config = require(`./../config/_config`)
 
 mongoose.Promise = global.Promise
 
