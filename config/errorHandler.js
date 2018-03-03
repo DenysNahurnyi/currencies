@@ -1,6 +1,6 @@
 'use strict'
 
-const errorHelper = require(`./../../utils/errorHelper`)
+const errorHelper = require(`./../utils/errorHelper`)
 
 module.exports = (app) => {
 	// catch 404 and forward to error handler
@@ -17,6 +17,6 @@ module.exports = (app) => {
 			error: err.error,
 			message: err.message
 		}
-		res.status(error.code).json(error)
+		res.json(error)
 	})
 }

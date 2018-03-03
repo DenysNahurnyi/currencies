@@ -1,6 +1,0 @@
-{
-	"database": "mongodb://localhost:27017/currencies_db",
-	"currencyService": {
-		"appId": "0ff2ccc76bba477baf6541fe2b0a7c3d"
-	}
-}

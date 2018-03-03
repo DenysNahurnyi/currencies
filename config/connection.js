@@ -1,9 +1,6 @@
 'use strict'
 const mongoose = require(`mongoose`)
-const config = require(`config`)
-// const database = config.get(`database`)
-const database = require(`../credentials`)[process.env.NODE_ENV].database
-console.log(`Database: ${database}, env is: ${process.env.NODE_ENV}`)
+const database = require(`./credentials`)[process.env.NODE_ENV].database
 
 mongoose.Promise = global.Promise
 

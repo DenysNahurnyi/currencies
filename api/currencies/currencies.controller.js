@@ -4,55 +4,68 @@ const currencyUtils = require(`./currencies.util`)
 const currencyDao = require(`./currencies.dao`)
 const errorHelper = require(`../../utils/errorHelper`)
 
-
-module.exports.getCurrenciesRoute = async (req, res, next) => {
+module.exports.getCurrencyDescriptionRoute = async (req, res, next) => {
 	try {
-		const currencies = await currencyUtils.getCurrencyDescriptionsOuterService()
-		const currenciesArray = currencyUtils.prepareToSaveCurrencyDescriptions(currencies)
-		await currencyDao.createCurrencyDescription(currenciesArray)
-
-		const currencValues = await currencyUtils.getCurrencyValuesOuterService()
-		
-
-		res.json(currencies)
-		// logModel.create({
-		// 	event: `Try to save smth in database`,
-		// 	date: new Date()
-		// })
+		const currencyDescriptionResponse = await currencyDao.getCurrencyDescription()
+		const responseData = currencyUtils.prettifyCurrencyDescription(currencyDescriptionResponse)
+		res.json(responseData)
 	} catch(err) {
-		console.log(err)
-		errorHelper.notFound(err)
 		return next(err)
 	}
 }
 
-module.exports.test = async (req, res, next) => {
+module.exports.getCurrencyValuesRoute = async (req, res, next) => {
 	try {
-		console.log('1')
+		const currencyValueResponse = await currencyDao.getCurrencyValue()
+		const responseData = currencyUtils.prettifyCurrencyValues(currencyValueResponse)
+		res.json(responseData)
+
+	} catch(err) {
+		return next(err)
+	}
+}
+
+module.exports.getCurrencyDetailsRoute = async (req, res, next) => {
+	try {
+		const requestData = {
+			abbr: req.params.abbr
+		}
+
+		const currencyValueResponse = await currencyDao.getCurrencyValue({abbr: requestData.abbr})
+		const currencyDescriptionResponse = await currencyDao.getCurrencyDescription({abbr: requestData.abbr})
+		const responseData = currencyUtils.prettifyCurrencyDetails(currencyValueResponse, currencyDescriptionResponse)
+		res.json(responseData)
+
+	} catch(err) {
+		return next(err)
+	}
+}
+
+
+module.exports.testRoute = async (req, res, next) => {
+	
+	try {
 		res.json({
-			msg: "Hello"
+			msg: `Hello`
 		})
-		// logModel.create({
-		// 	event: `Try to save smth in database`,
-		// 	date: new Date()
-		// })
 	} catch(err) {
 		errorHelper.notFound(err)
 		return next(err)
 	}
 }
+
 
 module.exports.recreateCurrencyDescriptionsInDb = async isEmpty => {
 	try {
 		if(!isEmpty) {
 			await currencyDao.dropCurrencyDescription()
-			console.log(`Description collection droped`)
 		}
 		const currencies = await currencyUtils.getCurrencyDescriptionsOuterService()
 		const currenciesArray = currencyUtils.prepareToSaveCurrencyDescriptions(currencies)
 		await currencyDao.createCurrencyDescription(currenciesArray)
+		await currencyDao.logEvent(`Collection with currency descriptions created`, `create`)
 	} catch(err) {
-		console.log(err)
+		await currencyDao.logError(String(err))
 		throw err
 	}
 }
@@ -66,10 +79,9 @@ module.exports.recreateCurrenciesValuesInDb = async isEmpty => {
 		const currencies = await currencyUtils.getCurrencyValuesOuterService()
 		const currenciesArray = currencyUtils.prepareToSaveCurrencyValues(currencies.rates, currencies.base)
 		await currencyDao.createCurrencyValue(currenciesArray)
+		await currencyDao.logEvent(`Collection with currency values created`, `create`)
 	} catch(err) {
-		console.log(err)
+		await currencyDao.logError(String(err))
 		throw err
 	}
 }
-
-

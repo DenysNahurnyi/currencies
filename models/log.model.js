@@ -5,9 +5,9 @@ const mongoose = require(`mongoose`)
 const Schema = mongoose.Schema
 
 const log = new Schema({
-	event: String,
+	eventMessage: String,
 	date: { type: Date, default: Date.now },
-	isError: {type: Boolean, default: false}
+	eventType: Number
 }, {
 	collection: `logs`,
 	_id: true
