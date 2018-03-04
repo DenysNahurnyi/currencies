@@ -6,10 +6,19 @@ const errorHelper = require(`../utils/errorHelper`)
 const tokenSecret = require(`../config/credentials`)[process.env.NODE_ENV || `local`].tokenSecret
 const BASE_URL = require(`../config/credentials`)[process.env.NODE_ENV || `local`].BASE_URL
 
-module.exports.createToken = (expTimeMinutes = 60) => jwt.sign({
-	data: `Username in future`,
-	exp: Math.floor(Date.now() / 1000) + (60 * expTimeMinutes)
-}, tokenSecret)
+module.exports.createToken = (expTimeMinutes = 60) => {
+	expTimeMinutes = Number(expTimeMinutes)
+	if(!expTimeMinutes || expTimeMinutes <= 0) {
+		throw errorHelper.serverError(`Period of experation for authorization token expiration is not valid`)
+	} else if(expTimeMinutes > 10080) {
+		throw errorHelper.serverError(`Period of experation for authorization token can't be longer than one week(10080)`)
+	} else {
+		return jwt.sign({
+			data: `Username in future`,
+			exp: Math.floor(Date.now() / 1000) + (60 * expTimeMinutes)
+		}, tokenSecret)
+	}
+}
 
 module.exports.verifyToken = token => 
 	jwt.verify(token, tokenSecret)

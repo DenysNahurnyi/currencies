@@ -3,7 +3,7 @@
 const express = require(`express`)
 const router = express.Router()
 
-const controller = require(`./currencies.controller`)
+const controller = require(`./currency.controller`)
 const authTokenUtil = require(`../../utils/authToken`)
 
 
@@ -21,10 +21,6 @@ router.get(`/rates/:abbr`,
 
 router.put(`/update`, 
 	authTokenUtil.verifyTokenMiddleware,
-	controller.updateCurrencyData)
-
-router.get(`/test`, 
-	authTokenUtil.verifyTokenMiddleware,
-	controller.testRoute)
+	controller.updateCurrencyDataRoute)
 
 module.exports = router

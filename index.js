@@ -21,13 +21,13 @@ require(`./config/errorHandler`)(app)
 // create server
 app.set(`port`, process.env.PORT || 3000)
 const server = http.createServer(app)
-// serverInit.prepareServer({values: true, description: true}).then(() => {
+serverInit.prepareServer({values: true, description: true}).then(() => {
 	server.listen(app.get(`port`), () => {
 		console.log(`Environment is ${app.get(`env`)}`)
 		if(app.get(`env`) !== `production`) {
 			console.log(`Server listening at: ${app.get(`port`)} port`)
 		}
 	})
-// })
+})
 
 module.exports = app

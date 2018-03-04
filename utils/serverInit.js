@@ -1,7 +1,7 @@
 `use strict`
 
-const currenciesDao = require(`../api/currencies/currencies.dao`)
-const currenciesController = require(`../api/currencies/currencies.controller`)
+const currenciesDao = require(`../api/currency/currency.dao`)
+const currenciesController = require(`../api/currency/currency.controller`)
 
 module.exports.prepareServer = async dropOption => {
 	try {
@@ -10,7 +10,7 @@ module.exports.prepareServer = async dropOption => {
 			await currenciesController.recreateCurrencyValuesInDb(false)
 		}
 		if(dropOption.description || !data.isDescriptionSet) {
-			await currenciesController.recreateCurrencyDescriptionsInDb(false)
+			await currenciesController.recreateCurrencyDescriptionsInDb()
 		}
 		console.log(`Server is prepared to work!`)
 	} catch(err) {
@@ -20,8 +20,8 @@ module.exports.prepareServer = async dropOption => {
 }
 
 const checkIfCollectionsSet = async () => {
-	const curDesc = await currenciesDao.getCurrencyDescriptions()
-	const curVal = await currenciesDao.getCurrencyValues()
+	const curDesc = await currenciesDao.getCurrencyDescription()
+	const curVal = await currenciesDao.getCurrencyValue()
 	return {
 		isValuesSet: curVal && curVal.length,
 		isDescriptionSet: curDesc && curDesc.length

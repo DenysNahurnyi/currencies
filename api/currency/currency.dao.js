@@ -17,9 +17,8 @@ module.exports.createCurrencyValue = data =>
 module.exports.getCurrencyValue = (filter = {}) => 
 	currencyModel.find(filter)
 
-module.exports.updateCurrencyValue = (filter, dataForUpdate) =>{
-console.log('1', filter,dataForUpdate )
-	return currencyModel.update(filter, {$set: dataForUpdate}, { upsert: true })}
+module.exports.updateCurrencyValue = (filter, dataForUpdate) =>
+	currencyModel.update(filter, {$set: dataForUpdate}, { upsert: true })
 
 module.exports.dropCurrencyDescription = async () => {
 	await currencyDescriptionModel.remove({})
@@ -30,12 +29,6 @@ module.exports.dropCurrencyValues = async () => {
 	await currencyModel.remove({})
 	await module.exports.logEvent(`Collection with currency values dropped`, `drop`)
 }
-
-module.exports.getCurrencyDescriptions = () =>
-	currencyDescriptionModel.find({})
-
-module.exports.getCurrencyValues = () =>
-	currencyModel.find({})
 
 module.exports.logEvent = (eventMsg, eventType) =>
 	logModel.create({

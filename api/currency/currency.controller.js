@@ -1,7 +1,7 @@
 'use strict'
 
-const currencyUtils = require(`./currencies.util`)
-const currencyDao = require(`./currencies.dao`)
+const currencyUtils = require(`./currency.util`)
+const currencyDao = require(`./currency.dao`)
 const errorHelper = require(`../../utils/errorHelper`)
 
 module.exports.getCurrencyDescriptionRoute = async (req, res, next) => {
@@ -27,9 +27,8 @@ module.exports.getCurrencyValuesRoute = async (req, res, next) => {
 
 module.exports.getCurrencyDetailsRoute = async (req, res, next) => {
 	try {
-		currencyUtils.validateAbbr(req.params.abbr)
 		const requestData = {
-			abbr: req.params.abbr
+			abbr: currencyUtils.validateAbbr(req.params.abbr)
 		}
 		const currencyValueResponse = await currencyDao.getCurrencyValue({abbr: requestData.abbr})
 		const currencyDescriptionResponse = await currencyDao.getCurrencyDescription({abbr: requestData.abbr})
@@ -41,9 +40,9 @@ module.exports.getCurrencyDetailsRoute = async (req, res, next) => {
 	}
 }
 
-module.exports.updateCurrencyData = async (req, res, next) => {
+module.exports.updateCurrencyDataRoute = async (req, res, next) => {
 	try {
-		module.exports.recreateCurrencyDescriptionsInDb(false)
+		module.exports.recreateCurrencyDescriptionsInDb()
 		const currencyValuesResponse = await currencyUtils.getCurrencyValuesOuterService()
 
 		await Object.keys(currencyValuesResponse.rates).map(async abbr => {
@@ -63,21 +62,7 @@ module.exports.updateCurrencyData = async (req, res, next) => {
 	}
 }
 
-
-module.exports.testRoute = async (req, res, next) => {
-	
-	try {
-		res.json({
-			msg: `Hello`
-		})
-	} catch(err) {
-		errorHelper.notFound(err)
-		return next(err)
-	}
-}
-
-
-module.exports.recreateCurrencyDescriptionsInDb = async isEmpty => {
+module.exports.recreateCurrencyDescriptionsInDb = async (isEmpty = false) => {
 	try {
 		if(!isEmpty) {
 			await currencyDao.dropCurrencyDescription()
