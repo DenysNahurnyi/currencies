@@ -1,6 +1,6 @@
 'use strict'
 const mongoose = require(`mongoose`)
-const database = require(`./credentials`)[process.env.NODE_ENV].database
+const database = require(`./credentials`)[process.env.NODE_ENV || `local`	].database
 
 mongoose.Promise = global.Promise
 

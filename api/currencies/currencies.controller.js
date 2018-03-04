@@ -55,7 +55,7 @@ module.exports.updateCurrencyData = async (req, res, next) => {
 			}
 			await currencyDao.updateCurrencyValue(filter, data)
 		})
-		
+		await currencyDao.logEvent(`Collection with currency values updated`, `update`)
 		res.status(200).end(`Database updated`)
 
 	} catch(err) {

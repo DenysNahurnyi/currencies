@@ -3,7 +3,7 @@
 const request = require(`request-promise`)
 
 const errorHelper = require(`../../utils/errorHelper`)
-const appId = require(`../../config/credentials`)[process.env.NODE_ENV].currencyService.appId
+const appId = require(`../../config/credentials`)[process.env.NODE_ENV || `local`].currencyService.appId
 
 module.exports.getCurrencyDescriptionsOuterService = async () => 
 	JSON.parse(

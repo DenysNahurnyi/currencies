@@ -9,7 +9,7 @@ const serverInit = require(`./utils/serverInit`)
 require(`./config/express`)(app)
 
 // Routing
-app.use(`/api`, require(`./api/currencies`))
+app.use(`/api`, require(`./api/`))
 // db connection and settings
 const connection = require(`./config/connection`)
 connection.getMongoose()

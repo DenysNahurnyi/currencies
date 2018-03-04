@@ -3,7 +3,9 @@
 const express = require(`express`)
 const router = express.Router()
 
-router.use(`/`, require(`./currencies/`))
-router.use(`/token`, require(`./auth/`))
+const controller = require(`./auth.controller`)
+
+router.get(`/`, 
+	controller.getToken)
 
 module.exports = router
